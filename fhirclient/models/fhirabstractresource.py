@@ -38,8 +38,8 @@ class FHIRAbstractResource(fhirabstractbase.FHIRAbstractBase):
             return fhirelementfactory.FHIRElementFactory.instantiate(res_type, jsondict)
         return super(FHIRAbstractResource, cls)._with_json_dict(jsondict)
     
-    def as_json(self):
-        js = super(FHIRAbstractResource, self).as_json()
+    def as_json(self, **kwargs):
+        js = super(FHIRAbstractResource, self).as_json(**kwargs)
         js['resourceType'] = self.resource_type
         return js
     
@@ -117,7 +117,7 @@ class FHIRAbstractResource(fhirabstractbase.FHIRAbstractBase):
         if self.id:
             raise Exception("This resource already has an id, cannot create")
         
-        ret = srv.post_json(self.relativeBase(), self.as_json())
+        ret = srv.post_json(self.relativeBase(), self.as_json(require_non_optional=True))
         if len(ret.text) > 0:
             return ret.json()
         return None
@@ -136,7 +136,7 @@ class FHIRAbstractResource(fhirabstractbase.FHIRAbstractBase):
         if not self.id:
             raise Exception("Cannot update a resource that does not have an id")
         
-        ret = srv.put_json(self.relativePath(), self.as_json())
+        ret = srv.put_json(self.relativePath(), self.as_json(require_non_optional=True))
         if len(ret.text) > 0:
             return ret.json()
         return None
