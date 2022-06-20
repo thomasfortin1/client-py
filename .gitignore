@@ -11,6 +11,8 @@ session_data
 
 # IDE files
 *.sublime-*
+.idea/
 
 .idea
-fhirclient.egg-info
+.DS_Store
+fhirclient.egg-info/
