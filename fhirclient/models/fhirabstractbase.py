@@ -289,7 +289,6 @@ class FHIRAbstractBase(object):
                 else:
                     try:
                         found.add(of_many or jsname)
-                        print(type(value))
                         js[jsname] = value.as_json(require_non_optional=require_non_optional) if hasattr(value, 'as_json') else value
                     except FHIRValidationError as e:
                         err = e.prefixed(name)
